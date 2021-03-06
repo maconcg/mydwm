@@ -82,6 +82,8 @@ ResourcePref resources[] = {
 		{ "mfact",   	        FLOAT,   &mfact },
 };
 
+void resetnmaster(const Arg *arg);
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
@@ -90,6 +92,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,    focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_o,      resetnmaster,   {.i = -1 } },
 	{ MODKEY,                       XK_bracketleft,  setmfact, {.f = -0.05} },
 	{ MODKEY,                       XK_bracketright, setmfact, {.f = +0.05} },
 	{ SUMETAMOD,                    XK_bracketleft,  setcfact, {.f = +0.25} },
@@ -136,3 +139,9 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
+void
+resetnmaster(const Arg *arg)
+{
+	selmon->nmaster = 1;
+	arrange(selmon);
+}
