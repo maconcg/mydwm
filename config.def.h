@@ -61,7 +61,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
-
  
 /*
  * Xresources preferences to load at startup
@@ -82,8 +81,6 @@ ResourcePref resources[] = {
 		{ "mfact",   	        FLOAT,   &mfact },
 };
 
-void resetnmaster(const Arg *arg);
-
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
@@ -92,14 +89,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,    focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_o,      resetnmaster,   {.i = -1 } },
 	{ MODKEY,                       XK_bracketleft,  setmfact, {.f = -0.05} },
 	{ MODKEY,                       XK_bracketright, setmfact, {.f = +0.05} },
 	{ SUMETAMOD,                    XK_bracketleft,  setcfact, {.f = +0.25} },
 	{ SUMETAMOD,                    XK_bracketright, setcfact, {.f = -0.25} },
 	{ SUMETAMOD,                    XK_semicolon,    setcfact, {.f =  0.00} },
 	{ MODKEY,                       XK_m,      zoom,           {0} },
-	{ MODKEY,                       XK_l,      view,           {0} },
+	{ MODKEY,                       XK_o,      view,           {0} },
 	{ MODKEY|ShiftMask,             XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_j,      setlayout,      {.v = &layouts[1]} },
@@ -138,10 +134,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
-void
-resetnmaster(const Arg *arg)
-{
-	selmon->nmaster = 1;
-	arrange(selmon);
-}
